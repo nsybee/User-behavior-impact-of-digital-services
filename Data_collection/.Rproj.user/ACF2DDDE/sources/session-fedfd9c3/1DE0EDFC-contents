@@ -1,0 +1,324 @@
+---
+title: "Serverside_energy Impact"
+output: html_document
+date: "2024-07-22"
+---
+```{r}
+install.packages("corrplot")
+```
+
+
+```{r}
+library(tidyverse)
+library(tidyr)
+library(writexl)
+library(readxl)
+library(corrplot)
+library(dplyr)
+library(stats)
+library(DescTools)
+```
+
+
+
+```{r}
+Product_browsing <- read_excel("product_browsing_data.xlsx")
+product_filtering <- read_excel("product_filtering_data.xlsx")
+cart_updates <-read_excel("cart_update_data.xlsx")
+view(Product_browsing)
+view(product_filtering)
+view(cart_updates)
+```
+
+
+```{r}
+ggplot(Product_browsing)+
+  #geom_boxplot( aes( x = Attempt, y = EnergyImpact, colour = task))+
+  geom_line(aes( x = Attempt, y = EnergyImpact, colour = task))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 120000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "Energy impact of Product_browsing per number of users")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+ 
+
+ggplot(product_filtering)+
+  #geom_boxplot( aes( x = Attempt, y = EnergyImpact, colour = task))+
+  geom_line(aes( x = Attempt, y = EnergyImpact, colour = task))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 120000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "Energy impact of Product_filtering per number of users")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+
+ggplot(cart_updates)+
+  #geom_boxplot( aes( x = Attempt, y = EnergyImpact, colour = task))+
+  geom_line(aes( x = Attempt, y = EnergyImpact, colour = task))+
+  geom_density(aes(x = Attempt))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 60000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "Energy impact of Cart updates per number of users")+
+ theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
+```
+```{r}
+ 
+ qqnorm(cart_updates$EnergyImpact)
+ qqline(cart_updates$EnergyImpact)
+ 
+  qqnorm(product_filtering$EnergyImpact)
+  qqline(product_filtering$EnergyImpact)
+  
+  qqnorm(Product_browsing$EnergyImpact)
+  qqline(Product_browsing$EnergyImpact)
+  
+ 
+
+```
+
+
+
+```{r}
+single_user <- read_excel("singleUser_consumption.xlsx")
+five_user <- read_excel("5_User_consumption.xlsx")
+ten_users <-read_excel("10_users_consumption.xlsx")
+hundres_users <- read_excel("100_users_consumption.xlsx")
+threeHundred_users <- read_excel("300_users_consumption.xlsx")
+sixHundred_users <-read_excel("600_users_consumption.xlsx")
+thousand_users <-read_excel("1000_users_consumption.xlsx")
+view(single_user)
+view(five_user)
+view(ten_users)
+view(hundres_users)
+view(threeHundred_users)
+view(sixHundred_users)
+view(thousand_users)
+```
+
+```{r}
+
+ qqnorm(single_user$EnergyImpact,
+        main = "single users consumption",
+        xlab = "Theoritical Quantiles",
+        ylab = "Sample Quantiles")
+ qqline(single_user$EnergyImpact)
+ 
+ qqnorm(hundres_users$EnergyImpact,
+        main = "One hundred users consumption",
+        xlab = "Theoritical Quantiles",
+        ylab = "Sample Quantiles")
+ qqline(hundres_users$EnergyImpact)
+  
+ 
+
+```
+
+
+```{r}
+ggplot(single_user, aes(x=Attempt))+
+  geom_line(aes(y=EnergyImpact, colour = `task`))+
+   scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 1000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "Single user energy impact on the server-side")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+
+ggplot(five_user, aes(x=Attempt))+
+  geom_line(aes(y=EnergyImpact, colour = `task`))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 5000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "Five user energy impact on the server-side")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
+ggplot(ten_users, aes(x=Attempt))+
+  geom_line(aes(y=EnergyImpact, colour = `task`))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 10000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "Ten user energy impact on the server-side")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+
+ggplot(hundres_users, aes(x=Attempt))+
+  geom_line(aes(y=EnergyImpact, colour = `task`))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 100000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "One hundred users energy impact on the server-side")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+ggplot(threeHundred_users, aes(x=Attempt))+
+  geom_line(aes(y=EnergyImpact, colour = `task`))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 120000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "Three hundred users energy impact on the server-side")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+
+ggplot(sixHundred_users, aes(x=Attempt))+
+  geom_line(aes(y=EnergyImpact, colour = `task`))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 120000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "six hundred users energy impact on the server-side")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+
+ggplot(thousand_users, aes(x=Attempt))+
+  geom_line(aes(y=EnergyImpact, colour = `task`))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 120000))+
+  labs(x ="Number of experimental attempts", Y = "Energy_Impact",
+  title = "One thousand energy impact on the server-side")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+```
+
+
+```{r}
+
+browsing_dist <- Product_browsing %>%
+  filter(grepl("100_product_browsing", task))
+ggplot(browsing_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "One hundred users product browsing")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
+filtering_dist <- product_filtering %>%
+  filter(grepl("100_product_filtering", task))
+ggplot(filtering_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "One hundred users product filtering")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+update_dist <- cart_updates %>%
+  filter(grepl("100_Updating_cart", task))
+ggplot(update_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "One hundred users cart update")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+browsing_dist <- Product_browsing %>%
+  filter(grepl("300_product_browsing", task))
+ggplot(browsing_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "Three hundred users product browsing")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
+filtering_dist <- product_filtering %>%
+  filter(grepl("300_product_filtering", task))
+ggplot(filtering_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "Three hundred users product filtering")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+update_dist <- cart_updates %>%
+  filter(grepl("300_Updating_cart", task))
+ggplot(update_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "Three hundred users cart update")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
+update_dist <- cart_updates %>%
+  filter(grepl("10_Updating_cart", task))
+ggplot(update_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "Ten hundred users cart update")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+filtering_dist <- product_filtering %>%
+  filter(grepl("10_product_filtering", task))
+ggplot(filtering_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "Ten hundred users product filtering")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+
+filtering_dist <- product_filtering %>%
+  filter(grepl("10_product_filtering", task))
+ggplot(filtering_dist,aes(EnergyImpact, color = task))+
+  geom_density()+
+  labs(x = "Energy_Impact",
+  title = "Ten hundred users product filtering")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+
+
+```{r}
+### checking for normality for the same number of users performing different interaction
+
+qqnorm(update_dist$EnergyImpact,
+        main = "six hundred users cart updates consumption",
+        xlab = "Theoritical Quantiles",
+        ylab = "Sample Quantiles")
+ qqline(update_dist$EnergyImpact)
+ 
+ 
+ 
+ qqnorm(filtering_dist$EnergyImpact,
+        main = "Six hundred users product filtering consumption",
+        xlab = "Theoritical Quantiles",
+        ylab = "Sample Quantiles")
+ qqline(filtering_dist$EnergyImpact)
+ 
+ 
+ qqnorm(browsing_dist$EnergyImpact,
+        main = "Six hunderd users product browsing consumption",
+        xlab = "Theoritical Quantiles",
+        ylab = "Sample Quantiles")
+ qqline(browsing_dist$EnergyImpact)
+```
+
+
+
+```{r}
+client_side <- read_excel("client-side_data/single_user_client_side.xlsx")
+#view(client_side)
+
+ggplot(client_side, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour=ProcessName))+
+  scale_x_continuous(limits = c(1,10), breaks = 1:10)+
+  scale_y_continuous(limits = c(1, 1000))+
+  labs(title = "Client-side energy impact")+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+```{r}
+#hypothesis testing
+# here we used a non parametric test because the energy impact data we measured was not normally distributed.
+All_Behavior <- all_task %>%
+  dplyr::mutate(User_behavior = task, Energy_Impact = EnergyImpact)
+
+  kruskal_test <- kruskal.test(Energy_Impact ~ User_behavior, data = All_Behavior)
+    
+    
+
+print(kruskal_test)
+
+```
+
+```{r}
+post_kruskal_test <- pairwise.wilcox.test(All_Behavior$Energy_Impact, All_Behavior$User_behavior, p.adjust.method = "bonferroni")
+print(post_kruskal_test)
+
+
+```
+

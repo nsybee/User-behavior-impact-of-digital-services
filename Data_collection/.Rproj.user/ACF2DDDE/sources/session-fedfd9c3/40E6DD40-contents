@@ -1,0 +1,88 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-07-09"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(tidyr)
+library(writexl)
+library(rstatix)
+```
+```{r}
+library(readxl)
+```
+
+
+```{r}
+Catalogdata1user<-read_excel("CatalogBrowsing_1user.xlsx")
+Catalogdata100user<-read_excel("CatalogBrowsing_100users.xlsx")
+Catalogdata1000user<-read_excel("CatalogBrowsing_1000User.xlsx")
+
+
+filterProduct1user <-read_excel("filter_product1user.xlsx")
+filterProduct1000users <-read_excel("filter_product1000users.xlsx")
+filterProduct100users <- read_excel("filter_product100users.xlsx")
+
+all_categories<-read_excel("All catagories.xlsx")
+```
+
+```{r}
+ggplot(Catalogdata1user, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour = Name))+
+  labs(title = "single user catalog browsing")
+
+
+
+ggplot(Catalogdata100user, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour = Name))+
+  labs(title = "100 user catalog browsing")
+
+ggplot(Catalogdata1000user, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour = Name))+
+  labs(title = "1000 user catalog browsing")
+
+
+
+ggplot(filterProduct1user, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour = ProcessName))+
+  labs(title = "single user catalog filtering")
+
+ggplot(filterProduct100users, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour = ProcessName))+
+  labs(title = "100 user catalog filtering")
+
+
+ggplot(filterProduct1000users, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour = ProcessName))+
+  labs(title = "1000 user catalog filtering")
+
+ggplot(all_categories, aes(x=Attempts))+
+  geom_line(aes(y=EnergyImpact, colour = Name))+
+  labs(title = "all activities")
+
+
+```
+
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -1,0 +1,8 @@
+"0",""
+"0","update_dist <- cart_updates %>%"
+"0","  filter(grepl(""300_Updating_cart"", task))"
+"0","ggplot(update_dist,aes(EnergyImpact, color = task))+"
+"0","  geom_density()+"
+"0","  labs(x = ""Energy_Impact"","
+"0","  title = ""Three hundred users cart update"")+"
+"0","  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())"

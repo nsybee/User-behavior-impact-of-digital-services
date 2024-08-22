@@ -1,0 +1,6 @@
+"0","Product_browsing <- read_excel(""product_browsing_data.xlsx"")"
+"0","product_filtering <- read_excel(""product_filtering_data.xlsx"")"
+"0","cart_updates <-read_excel(""cart_update_data.xlsx"")"
+"0","view(Product_browsing)"
+"0","view(product_filtering)"
+"0","view(cart_updates)"

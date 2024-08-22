@@ -1,0 +1,8 @@
+"0",""
+"0","browsing_dist <- Product_browsing %>%"
+"0","  filter(grepl(""100_product_browsing"", task))"
+"0","ggplot(browsing_dist,aes(EnergyImpact, color = task))+"
+"0","  geom_density()+"
+"0","  labs(x = ""Energy_Impact"","
+"0","  title = ""One hundred users product browsing"")+"
+"0","  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())"

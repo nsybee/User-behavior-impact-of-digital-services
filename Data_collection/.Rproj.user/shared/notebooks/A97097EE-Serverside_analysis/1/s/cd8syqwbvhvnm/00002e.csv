@@ -1,0 +1,5 @@
+"0",""
+"0"," qqnorm(single_user$EnergyImpact,"
+"0","        main = ""single users consumption"","
+"0","        xlab = ""Theoritical Quantiles"","
+"0","        ylab = ""Sample Quantiles"")"

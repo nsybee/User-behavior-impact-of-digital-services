@@ -1,0 +1,8 @@
+"0","ggplot(Product_browsing)+"
+"0","  #geom_boxplot( aes( x = Attempt, y = EnergyImpact, colour = task))+"
+"0","  geom_line(aes( x = Attempt, y = EnergyImpact, colour = task))+"
+"0","  scale_x_continuous(limits = c(1,10), breaks = 1:10)+"
+"0","  scale_y_continuous(limits = c(1, 120000))+"
+"0","  labs(x =""Number of experimental attempts"", Y = ""Energy_Impact"","
+"0","  title = ""Energy impact of Product_browsing per number of users"")+"
+"0","  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())"
