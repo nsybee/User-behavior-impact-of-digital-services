@@ -1,0 +1,78 @@
+---
+title: "Regression_model"
+output: html_document
+date: "2024-08-25"
+---
+
+
+
+```{r}
+library(tidyverse)
+library(tidyr)
+library(writexl)
+library(readxl)
+library(corrplot)
+library(dplyr)
+library(stats)
+library(DescTools)
+```
+```{r}
+reg_product_filtering <- read_excel("product_filtering_data.xlsx")
+reg_product_browsing <- read_excel("product_browsing_data.xlsx")
+reg_cart_updates <-read_excel("cart_update_data.xlsx")
+single_user <- read_excel("singleUser_consumption.xlsx")
+five_user <- read_excel("5_User_consumption.xlsx")
+ten_users <-read_excel("10_users_consumption.xlsx")
+hundred_users <- read_excel("100_users_consumption.xlsx")
+view(reg_product_browsing)
+view(reg_product_filtering)
+view(reg_cart_updates)
+view(single_user)
+view(five_user)
+view(ten_users)
+view(hundred_users)
+```
+
+
+
+```{r}
+reg_browsing <- lm(EnergyImpact ~ task + Time * number_of_users, data = `reg_product_browsing`)
+summary(reg_browsing)
+```
+```{r}
+ reg_filtering<- lm(EnergyImpact ~ task + Time * number_of_users, data = `reg_product_filtering`)
+summary(reg_filtering)
+```
+```{r}
+reg_cartUpdate<- lm(EnergyImpact ~ task + Time * number_of_users, data = `reg_cart_updates`)
+summary(reg_cartUpdate)
+```
+```{r}
+reg_single_user<- lm(EnergyImpact ~ task + Time * `number of users`, data = `single_user`)
+summary(reg_single_user)
+```
+
+```{r}
+reg_ten_users<- lm(EnergyImpact ~ task + Time * number_of_users, data = `ten_users`)
+summary(reg_ten_users)
+```
+
+```{r}
+reg_hundred_users<- lm(EnergyImpact ~ task + Time * number_of_users, data = `hundred_users`)
+summary(reg_hundred_users)
+```
+
+```{r}
+######## Model validation
+val_cart_updates <-read_excel("cart_update_data _val.xlsx")
+#view(val_cart_updates)
+
+validate_cartUpdate <- predict(reg_cartUpdate,newdata = `val_cart_updates` )
+`val_cart_updates`$predicted_cartUpdate_Impact <- validate_cartUpdate
+print(val_cart_updates)
+```
+
+
+
+
+
